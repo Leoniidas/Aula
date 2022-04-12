@@ -1,0 +1,39 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+
+if(request.getParameter("login") != null ) {
+    session.setAttribute("username", request.getParameter("username"));
+    response.sendRedirect(request.getRequestURI());
+}
+if(request.getParameter("logoff") != null) {
+    session.removeAttribute("username");
+    response.sendRedirect(request.getRequestURI());
+}
+
+%>
+
+<style>
+    #warning {
+        color: red;
+    }
+</style>
+
+<h1>MaryApp</h1>
+
+<% if(session.getAttribute("username") != null) {%>
+    <form>    
+        <a href="index.jsp">Index</a> |
+        <a href="about.jsp">Sobre mim</a> |
+        <a href="loteria.jsp">Loteria</a> |
+        Bem vindo, <b><%= session.getAttribute("username")%></b>
+        <input type="submit" name="logoff" value="Sair"/>
+    </form>
+    <hr/>
+<% } else { %>
+    <form>    
+        <input type="text" name="username"/>
+        <input type="submit" name="login" value="Entrar"/>
+    </form>
+<% } %>
